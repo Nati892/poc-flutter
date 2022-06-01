@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:poc_flutter/Navigation/Screens/ExploreScreen.dart';
-import 'package:poc_flutter/Navigation/Screens/HomeScreen.dart';
-import 'package:poc_flutter/Navigation/Screens/MyZoneScreen.dart';
-import 'package:poc_flutter/Navigation/Screens/NotifScreen.dart';
-import 'package:poc_flutter/Navigation/Screens/PostScreen.dart';
+import 'package:poc_flutter/Screens/ExploreScreen.dart';
+import 'package:poc_flutter/Screens/HomeScreen.dart';
+import 'package:poc_flutter/Screens/MyZoneScreen.dart';
+import 'package:poc_flutter/Screens/NotifScreen.dart';
+import 'package:poc_flutter/Screens/PostScreen.dart';
 
-import 'Navigation/Screens/ChatScreen.dart';
+import 'Screens/ChatScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -52,7 +52,7 @@ class _MainPageState extends State<MainPage> {
         child: Row(children: [
           TextButton(
               onPressed: () {
-                Navigator.pop(context);//close drawer
+                Navigator.pop(context); //close drawer
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => ChatScreen()));
               },
@@ -84,8 +84,16 @@ class _MainPageState extends State<MainPage> {
   }
 
   void cahngeScreenIndex(int newVal) {
-    setState(() {
-      currentIndex = newVal;
-    });
+    if (newVal != 2)
+      setState(() {
+        currentIndex = newVal;
+      });
+    else
+      NavToCamera();
+  }
+
+  void NavToCamera() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => PostScreen()));
   }
 }

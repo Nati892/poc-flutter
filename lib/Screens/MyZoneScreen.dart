@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
-import 'package:poc_flutter/Navigation/Screens/ChatScreen.dart';
+import 'package:poc_flutter/Screens/ChatScreen.dart';
 
 class MyZoneScreen extends StatefulWidget {
   const MyZoneScreen({Key? key}) : super(key: key);
