@@ -39,7 +39,7 @@ class _MainPageState extends State<MainPage> {
   final Screens = [
     const HomeScreen(),
     const MyZoneScreen(),
-    const PostScreen(),
+    const PostScreenImagePicker(),
     const ExploreScreen(),
     const NotifScreen()
   ];
@@ -70,7 +70,7 @@ class _MainPageState extends State<MainPage> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: currentIndex,
-        onTap: cahngeScreenIndex,
+        onTap: changeScreenIndex,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'My zone'),
@@ -83,7 +83,7 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  void cahngeScreenIndex(int newVal) {
+  void changeScreenIndex(int newVal) {
     if (newVal != 2)
       setState(() {
         currentIndex = newVal;
@@ -94,6 +94,6 @@ class _MainPageState extends State<MainPage> {
 
   void NavToCamera() {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => PostScreen()));
+        context, MaterialPageRoute(builder: (context) => PostScreenImagePicker()));
   }
 }
