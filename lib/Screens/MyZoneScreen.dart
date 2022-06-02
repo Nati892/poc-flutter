@@ -17,8 +17,7 @@ class _MyZoneScreenState extends State<MyZoneScreen> {
       child: TextButton(
           child: Text("navigate"),
           onPressed: () => {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ChatScreen()))
+                Navigator.pushNamed(context,'/ChatScreen')
               }),
     );
   }

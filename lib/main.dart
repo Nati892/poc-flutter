@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:poc_flutter/Screens/ExploreScreen.dart';
-import 'package:poc_flutter/Screens/HomeScreen.dart';
-import 'package:poc_flutter/Screens/MyZoneScreen.dart';
-import 'package:poc_flutter/Screens/NotifScreen.dart';
+import 'package:poc_flutter/Navigation/navdata.dart';
 import 'package:poc_flutter/Screens/PostScreen.dart';
 
-import 'Screens/ChatScreen.dart';
+import 'Navigation/navigatorScreens.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,12 +15,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MainPage(),
-    );
+        title: 'Flutter Demo',
+        initialRoute: "/",
+        routes: getAppRouts(),
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ));
   }
 }
 
@@ -35,14 +32,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  int currentIndex = 0;
-  final Screens = [
-    const HomeScreen(),
-    const MyZoneScreen(),
-    const PostScreenImagePicker(),
-    const ExploreScreen(),
-    const NotifScreen()
-  ];
+  NavData myNaver = NavData.firstInit("/");
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +43,7 @@ class _MainPageState extends State<MainPage> {
           TextButton(
               onPressed: () {
                 Navigator.pop(context); //close drawer
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ChatScreen()));
+                Navigator.pushNamed(context, '/ChatScreen');
               },
               child: Text("navigate"))
         ]),
@@ -64,36 +53,32 @@ class _MainPageState extends State<MainPage> {
         centerTitle: true,
       ),
       body: IndexedStack(
-        index: currentIndex,
-        children: Screens,
+        index: myNaver.currentScreenIndex,
+        children: getMainAppScreens(),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: currentIndex,
-        onTap: changeScreenIndex,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'My zone'),
-          BottomNavigationBarItem(icon: Icon(Icons.upload), label: 'Post'),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'explore'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.notifications), label: 'notifications'),
-        ],
-      ),
+      bottomNavigationBar: BottomNavBar(
+          navData: myNaver, changeScreenCallback: changeScreenIndex),
     );
   }
 
   void changeScreenIndex(int newVal) {
-    if (newVal != 2)
+    if (newVal != 2) {
       setState(() {
-        currentIndex = newVal;
+        myNaver.currentScreenIndex = newVal;
       });
-    else
-      NavToCamera();
+    } else {
+      navToCamera();
+    }
   }
 
-  void NavToCamera() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => PostScreenImagePicker()));
+  void navToCamera() {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => PostScreenImagePicker()));
+  }
+
+  void NavBarNavigate(int newRoute) {
+    setState(() {
+      myNaver.ChangeScreenIndex(newRoute);
+    });
   }
 }
